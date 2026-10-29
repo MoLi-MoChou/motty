@@ -70,8 +70,7 @@ win32-input-mode。连字在固定网格内按单元格整形。标签可以重�
 转发给远端 shell，按主机开关，默认关闭。
 
 主机可以分组、打标签、搜索，也可以从 OpenSSH config、PuTTY、Xshell、MobaXterm、
-WindTerm、Electerm 导入。命令行或文件关联打开 Xshell 的 `.xsh` 会直接连接、不必先导入；
-这才是本机 `127.0.0.1` 上一次性堡垒机隧道该走的路径，单靠导入无法在隧道关闭后继续使用。TOTP/HOTP 种子可以存入保险库并自动填充。密码和私钥口令
+WindTerm、Electerm 导入。TOTP/HOTP 种子可以存入保险库并自动填充。密码和私钥口令
 进入 AES-256-GCM 保险库，密钥放在系统密钥存储，或由 Argon2id 主密码包裹。
 
 <p align="center">

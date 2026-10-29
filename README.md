@@ -80,9 +80,7 @@ A host can also forward the local ssh-agent to its shells, per host and off by
 default.
 
 Hosts can be grouped, tagged, searched and imported from OpenSSH config, PuTTY,
-Xshell, MobaXterm, WindTerm or Electerm. Opening an Xshell `.xsh` from the command
-line or a file association connects at once without importing; that is the path for
-one-shot bastion tunnels on `127.0.0.1`, which import alone cannot keep alive. TOTP/HOTP seeds can be stored in the
+Xshell, MobaXterm, WindTerm or Electerm. TOTP/HOTP seeds can be stored in the
 vault and filled automatically. Saved passwords and key passphrases go into an
 AES-256-GCM vault; the vault key lives in the system secret store or behind an
 Argon2id master password.
