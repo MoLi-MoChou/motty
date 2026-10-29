@@ -82,6 +82,7 @@ func hostFromSessionEntry(entry sessionimport.Entry) Host {
 		}
 	}
 	if host.isSSH() && sessionimport.IsLoopbackHost(host.Address) {
+		host.tunnel = true
 		applyLoopbackTunnelPolicy(&host)
 	}
 	host.finish()
@@ -100,11 +101,11 @@ func applyLoopbackTunnelPolicy(host *Host) {
 	host.Identity = ""
 }
 
-// loopbackTunnel reports a host that was opened for a local bastion tunnel:
-// loopback address with the password-only policy above. Those tunnels often die
-// when a second channel or keepalive probe is opened.
+// loopbackTunnel reports the ephemeral host opened from a local bastion tunnel
+// file. A saved host on 127.0.0.1 keeps the ordinary connection policy: the
+// tunnel rules are for the one-shot file, not for every local password host.
 func loopbackTunnel(host Host) bool {
-	return host.isSSH() && host.Auth == authPassword && sessionimport.IsLoopbackHost(host.Address)
+	return host.isSSH() && host.tunnel
 }
 
 // disableKeepAliveForTunnel clears keepalive on a loopback tunnel connection.

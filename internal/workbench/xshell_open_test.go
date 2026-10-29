@@ -100,8 +100,14 @@ func TestHostFromBastionSessionAppliesTunnelPolicy(t *testing.T) {
 	host := hostFromSessionEntry(sessionimport.Entry{
 		Name: "tunnel", Host: "127.0.0.1", Port: 63871, User: "root",
 	})
-	if host.ID != 0 || host.Auth != authPassword || host.algoMode() != algoCompatible || host.Address != "127.0.0.1" || host.Port != 63871 {
+	if host.ID != 0 || host.Auth != authPassword || host.algoMode() != algoCompatible || host.Address != "127.0.0.1" || host.Port != 63871 || !host.tunnel {
 		t.Fatalf("host = %+v mode=%v", host, host.algoMode())
+	}
+	// A host the user saved on 127.0.0.1 with password auth is not a tunnel:
+	// its connection sharing and keepalive must stay as configured.
+	saved := Host{ID: 7, Address: "127.0.0.1", User: "root", Port: 22, Auth: authPassword}
+	if loopbackTunnel(saved) {
+		t.Fatal("a saved loopback host was treated as a one-shot tunnel")
 	}
 	remote := hostFromSessionEntry(sessionimport.Entry{
 		Name: "web", Host: "web.example.com", Port: 22, User: "admin",
